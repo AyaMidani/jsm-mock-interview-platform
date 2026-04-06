@@ -83,14 +83,12 @@ export async function setSessionCookies(idToken: string) {
 export async function getCurrentUser(): Promise<User | null> {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get('session')?.value;
-    console.log('Session cookie:', sessionCookie);
     if (!sessionCookie) {
         return null;
     }
 
     try {
         const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
-        console.log('Decoded claims:', decodedClaims);
         const userRecord = await db.collection('users').doc(decodedClaims.uid).get();
         if (!userRecord.exists) {
             return null;

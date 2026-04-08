@@ -1,10 +1,8 @@
 'use server';
 
 import { auth, db } from "@/firebase/admin";
-import { doc } from "firebase/firestore";
 import { cookies } from "next/headers";
-import { use } from "react";
-import { success } from "zod";
+
 
 const ONE_WEEK = 60 * 60 * 24 * 7;
 
@@ -110,29 +108,4 @@ export async function isAuthenticated() {
     return !!user;
 }
 
-export async function getInterviewByUserId(userId : string): Promise<Interview[]> {
-  const interviews = await db
-    .collection('interviews')
-    .where('userId', '==', userId)
-    .orderBy('createdAt', 'desc')
-    .get();    
-    return interviews.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        })) as Interview[];
-}
 
-export async function getLatestInterviews(params : GetLatestInterviewsParams): Promise<Interview[]> {
-    const {userId , limit = 20} = params;
-  const interviews = await db
-    .collection('interviews')
-    .orderBy('createdAt', 'desc')
-    .where('finilized', '==', true)
-    .where('userId', '!=', userId)
-    .limit(limit)
-    .get();    
-    return interviews.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        })) as Interview[];
-}

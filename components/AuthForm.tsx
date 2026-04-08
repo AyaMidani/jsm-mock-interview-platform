@@ -77,7 +77,7 @@ function AuthForm({ type }: { type: FormType }) {
             router.push("/");
         }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error(`An error occurred: ${error}`)
     }   
   }

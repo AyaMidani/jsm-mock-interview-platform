@@ -23,7 +23,7 @@ export async function signUp(params: SignUpParams) {
             message: `Account created for ${name} with email ${email}`
         }
     } catch (error: any) {
-        console.error('Error creating new user:', error);
+        console.log('Error creating new user:', error);
         if(error.code === 'auth/email-already-exists') {
            return{
             error: 'Email already exists'
@@ -50,7 +50,7 @@ export async function signIn(params: SignInParams) {
             success: true,
         }
     } catch (error: any) {
-        console.error('Error signing in:', error);
+        console.log('Error signing in:', error);
         if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
             return{
                 success: false,
@@ -98,7 +98,7 @@ export async function getCurrentUser(): Promise<User | null> {
             id: userRecord.id,
         } as User;
     } catch (error) {
-        console.error('Error verifying session cookie:', error);
+        console.log('Error verifying session cookie:', error);
         return null;
     }
 } 

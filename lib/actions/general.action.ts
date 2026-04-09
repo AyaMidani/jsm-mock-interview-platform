@@ -20,7 +20,7 @@ export async function getInterviewByUserId(userId : string): Promise<Interview[]
 
 export async function getLatestInterviews(params : GetLatestInterviewsParams): Promise<Interview[]> {
     const {userId , limit = 20} = params;
-  const interviews = await db
+        const interviews = await db
     .collection('interviews')
     .orderBy('createdAt', 'desc')
     .where('finilized', '==', true)
